@@ -1,15 +1,14 @@
 {
     "Science": [
-        {
-            "title": "Inside the Criminal Mind: A Deep Dive into Forensic Psychology and Its Role in the Justice System",
-            "date": "07/17/2025",
-            "author": "Aasiyah Ahmed",
-            "filePath": "/blogs/criminal-mind.md"
-        }
+
     ],
     "Technology": [
         
     ],
-    "Engineering": [],
-    "Mathematics": []
+    "Engineering": [
+
+    ],
+    "Mathematics": [
+
+    ]
 }

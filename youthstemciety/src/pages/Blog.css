@@ -51,6 +51,10 @@ ul, ol {
     display: flex;
 }
 
+.blog-citations p {
+    line-height: 1.5;
+}
+
 .topic-all-blogs {
     width: 17vw;
     padding: 2vh 3vw 0 0;

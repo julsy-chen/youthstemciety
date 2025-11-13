@@ -30,9 +30,12 @@ export default function Blog() {
 
     const [blogContent, setBlogContent] = useState('');
     const [isLoading, setIsLoading] = useState(true);
+    const [blogSources, setBlogSources] = useState('');
 
     useEffect(() => {
         setIsLoading(true);
+        setBlogContent('');
+        setBlogSources('');
         if (currentBlog?.filePath) {
             // This blog's content is in a separate file, so we fetch it.
             fetch(process.env.PUBLIC_URL + currentBlog.filePath) // Use PUBLIC_URL for deployment
@@ -41,12 +44,29 @@ export default function Blog() {
                     return response.text();
                 })
                 .then(text => {
-                    setBlogContent(text);
+                // This is the string we are searching for. It must match EXACTLY.
+                    const delimiter = '---SOURCES---';
+                    
+                    if (text.includes(delimiter)) {
+                        // If the delimiter is found, split the content
+                        const parts = text.split(delimiter);
+                        const mainContent = parts[0].trim(); // .trim() removes extra newlines
+                        const sourcesContent = parts[1].trim();
+                        
+                        setBlogContent(mainContent);
+                        setBlogSources(sourcesContent);
+                    } else {
+                        // THIS IS WHAT IS HAPPENING NOW:
+                        // If no delimiter is found, the whole file becomes the content.
+                        setBlogContent(text);
+                        setBlogSources('');
+                    }
                     setIsLoading(false);
                 })
                 .catch(error => {
-                    console.error("Error fetching blog content:", error);
+                    console.error("Error fetching or parsing blog content:", error);
                     setBlogContent("Failed to load blog post.");
+                    setBlogSources('');
                     setIsLoading(false);
                 });
         } else if (currentBlog?.content) {
@@ -131,14 +151,14 @@ export default function Blog() {
                                 )}
                             </div>
                             <div className="blog-citations">
-                                {currentBlog?.sources && currentBlog.sources.length > 0 && (
+                                {blogSources && (
                                     <>
-                                        <h2>Sources</h2>
-                                        <ul>
-                                            {currentBlog.sources.map((source, index) => (
-                                                <li key={index}>{source}</li>
-                                            ))}
-                                        </ul>
+                                        <ReactMarkdown
+                                            remarkPlugins={[remarkGfm, remarkBreaks]}
+                                            rehypePlugins={[rehypeSanitize]}
+                                        >
+                                            {blogSources}
+                                        </ReactMarkdown>
                                     </>
                                 )}
                             </div>
