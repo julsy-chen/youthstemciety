@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/youthstemciety/static/css/main.0c529b48.css",
-    "main.js": "/youthstemciety/static/js/main.7192a14c.js",
+    "main.css": "/youthstemciety/static/css/main.c11afa81.css",
+    "main.js": "/youthstemciety/static/js/main.7a106e8c.js",
     "static/js/453.6ff9bb2b.chunk.js": "/youthstemciety/static/js/453.6ff9bb2b.chunk.js",
     "static/media/volunteer_1.png": "/youthstemciety/static/media/volunteer_1.ecfb9dba6dcf414217be.png",
     "static/media/volunteer_3.png": "/youthstemciety/static/media/volunteer_3.2671fbf279fa9b06a571.png",
@@ -31,12 +31,12 @@
     "static/media/left-arrow.svg": "/youthstemciety/static/media/left-arrow.3f62581bd4bafe2a2ab407353426d8e3.svg",
     "static/media/expand-icon.svg": "/youthstemciety/static/media/expand-icon.33d575c14c886e6fec3b5044fc7c54c2.svg",
     "static/media/collapse-icon.svg": "/youthstemciety/static/media/collapse-icon.19e1de70050176edeee5ba6e058aba73.svg",
-    "main.0c529b48.css.map": "/youthstemciety/static/css/main.0c529b48.css.map",
-    "main.7192a14c.js.map": "/youthstemciety/static/js/main.7192a14c.js.map",
+    "main.c11afa81.css.map": "/youthstemciety/static/css/main.c11afa81.css.map",
+    "main.7a106e8c.js.map": "/youthstemciety/static/js/main.7a106e8c.js.map",
     "453.6ff9bb2b.chunk.js.map": "/youthstemciety/static/js/453.6ff9bb2b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0c529b48.css",
-    "static/js/main.7192a14c.js"
+    "static/css/main.c11afa81.css",
+    "static/js/main.7a106e8c.js"
   ]
 }
