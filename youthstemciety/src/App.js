@@ -25,6 +25,8 @@ export default function App() {
           <Route path="/programs" element={<Programs />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/blogs" element={<Blog />} />
+          <Route path="/blogs/:topicSlug" element={<Blog />} />
+          <Route path="/blogs/:topicSlug/:postSlug" element={<Blog />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         </Routes>
         <Footer />

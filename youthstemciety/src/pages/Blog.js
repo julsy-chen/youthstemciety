@@ -1,36 +1,85 @@
 import './Blog.css';
 import blogData from './blogs.json';
-
-import commentIcon from '../images/speech-bubble.png';
 import streaks from '../images/streaks.png'
 
 import { useState, useEffect } from 'react';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
 import rehypeSanitize from "rehype-sanitize";
 
+const TOPICS = Object.keys(blogData);
+const DEFAULT_TOPIC = TOPICS.find((topic) => (blogData[topic] || []).length > 0) || TOPICS[0] || '';
+
+const topicToSlug = (topic) => topic.toLowerCase();
+
+const titleToSlug = (value = '') =>
+    value
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+
+const blogToSlug = (blog) => {
+    if (blog?.slug) {
+        return blog.slug;
+    }
+
+    if (blog?.filePath) {
+        const fileName = blog.filePath.split('/').pop() || '';
+        return fileName.replace(/\.[^/.]+$/, '');
+    }
+
+    return titleToSlug(blog?.title || '');
+};
+
+const buildBlogPath = (topic, blog) => `/blogs/${topicToSlug(topic)}/${blogToSlug(blog)}`;
+
 export default function Blog() {
-    // Step 1: Initialize state from localStorage
-    const [currentTopic, setCurrentTopic] = useState(() => {
-        return localStorage.getItem('currentTopic') || 'Science';
-    });
+    const navigate = useNavigate();
+    const { topicSlug, postSlug } = useParams();
 
+    const [currentTopic, setCurrentTopic] = useState(DEFAULT_TOPIC);
     const [currentBlog, setCurrentBlog] = useState(() => {
-        const savedBlogTitle = localStorage.getItem('currentBlogTitle');
-        const topicToSearch = localStorage.getItem('currentTopic') || 'Science';
-
-        if (savedBlogTitle && blogData[topicToSearch]) {
-            const savedBlog = blogData[topicToSearch].find(blog => blog.title === savedBlogTitle);
-            if (savedBlog) return savedBlog;
-        }
-
-        return blogData[topicToSearch][0];
+        const initialBlogs = blogData[DEFAULT_TOPIC] || [];
+        return initialBlogs[0] || null;
     });
 
     const [blogContent, setBlogContent] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [blogSources, setBlogSources] = useState('');
+    useEffect(() => {
+        if (!DEFAULT_TOPIC) {
+            setCurrentTopic('');
+            setCurrentBlog(null);
+            return;
+        }
+
+        const matchedTopic = TOPICS.find((topic) => topicToSlug(topic) === topicSlug);
+        const resolvedTopic = matchedTopic || DEFAULT_TOPIC;
+        const blogsForTopic = blogData[resolvedTopic] || [];
+        const matchedBlog = postSlug
+            ? blogsForTopic.find((blog) => blogToSlug(blog) === postSlug)
+            : null;
+        const resolvedBlog = matchedBlog || blogsForTopic[0] || null;
+
+        setCurrentTopic(resolvedTopic);
+        setCurrentBlog(resolvedBlog);
+
+        if (resolvedBlog) {
+            const resolvedTopicSlug = topicToSlug(resolvedTopic);
+            const resolvedBlogSlug = blogToSlug(resolvedBlog);
+            if (topicSlug !== resolvedTopicSlug || postSlug !== resolvedBlogSlug) {
+                navigate(`/blogs/${resolvedTopicSlug}/${resolvedBlogSlug}`, { replace: true });
+            }
+        } else {
+            const resolvedTopicSlug = topicToSlug(resolvedTopic);
+            if (topicSlug !== resolvedTopicSlug || postSlug) {
+                navigate(`/blogs/${resolvedTopicSlug}`, { replace: true });
+            }
+        }
+    }, [topicSlug, postSlug, navigate]);
 
     useEffect(() => {
         setIsLoading(true);
@@ -80,24 +129,7 @@ export default function Blog() {
         }
     }, [currentBlog]);
 
-    // Step 2: Save state changes to localStorage
-    useEffect(() => {
-        localStorage.setItem('currentTopic', currentTopic);
-        if (currentBlog) {
-            localStorage.setItem('currentBlogTitle', currentBlog.title);
-        }
-    }, [currentTopic, currentBlog]);
-
-    const handleTopicClick = (topic) => {
-        setCurrentTopic(topic);
-        setCurrentBlog(blogData[topic] ? blogData[topic][0] : null);
-    };
-
-    const handleBlogClick = (blog) => {
-        setCurrentBlog(blog);
-    };
-
-    // Step 3: The navigate logic has been removed.
+    const currentTopicBlogs = blogData[currentTopic] || [];
 
     return(
         <div className="Blog">
@@ -113,17 +145,23 @@ export default function Blog() {
             </div>
             <div className="blog-page-body">
                 <div className="topic-all-blogs">
-                    <h2>Our {currentTopic} Blogs</h2>
+                    <h2>{currentTopic ? `Our ${currentTopic} Blogs` : 'Our Blogs'}</h2>
                     <div>
-                        {blogData[currentTopic] && blogData[currentTopic].map((blog, index) => (
-                            <li 
-                                key={index}
-                                onClick={() => handleBlogClick(blog)}
-                                className={currentBlog && currentBlog.title === blog.title ? "active-blog-item" : ""}
-                            >
-                                <p>{blog.title}</p>
-                            </li>
-                        ))}
+                        {currentTopicBlogs.map((blog, index) => {
+                            const blogSlug = blogToSlug(blog);
+                            const isActiveBlog = currentBlog && blogToSlug(currentBlog) === blogSlug;
+
+                            return (
+                                <li 
+                                    key={`${blogSlug}-${index}`}
+                                    className={isActiveBlog ? "active-blog-item" : ""}
+                                >
+                                    <NavLink to={buildBlogPath(currentTopic, blog)} className="blog-nav-link">
+                                        <p>{blog.title}</p>
+                                    </NavLink>
+                                </li>
+                            );
+                        })}
                     </div>
                 </div>
 
@@ -176,26 +214,22 @@ export default function Blog() {
                     <div className="topic-selection">
                         <h2>Topics</h2>
                         <ul className ="topic-list">
-                            <li onClick={() => handleTopicClick("Science")}>
-                                <p className={(currentTopic === "Science" ? "current-topic" : "other-topic")}>
-                                    Science
-                                </p>
-                            </li>
-                            <li onClick={() => handleTopicClick("Technology")}>
-                                <p className={(currentTopic === "Technology" ? "current-topic" : "other-topic")}>
-                                    Technology
-                                </p>
-                            </li>
-                            <li onClick={() => handleTopicClick("Engineering")}>
-                                <p className={(currentTopic === "Engineering" ? "current-topic" : "other-topic")}>
-                                    Engineering
-                                </p>
-                            </li>
-                            <li onClick={() => handleTopicClick("Mathematics")}>
-                                <p className={(currentTopic === "Mathematics" ? "current-topic" : "other-topic")}>
-                                    Mathematics
-                                </p>
-                            </li>
+                            {TOPICS.map((topic) => {
+                                const firstBlog = (blogData[topic] || [])[0] || null;
+                                const topicPath = firstBlog
+                                    ? buildBlogPath(topic, firstBlog)
+                                    : `/blogs/${topicToSlug(topic)}`;
+
+                                return (
+                                    <li key={topic}>
+                                        <NavLink to={topicPath} className="topic-nav-link">
+                                            <p className={(currentTopic === topic ? "current-topic" : "other-topic")}>
+                                                {topic}
+                                            </p>
+                                        </NavLink>
+                                    </li>
+                                );
+                            })}
                         </ul>
                     </div>
                 </div>
