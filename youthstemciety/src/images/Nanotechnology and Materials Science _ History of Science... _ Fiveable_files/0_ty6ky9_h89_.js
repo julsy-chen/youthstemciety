@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,681779,e=>{"use strict";var o,t,r=((o={}).Five="FIVE",o.Four="FOUR",o.One="ONE",o.Three="THREE",o.Two="TWO",o),T=((t={}).Down="DOWN",t.Up="UP",t);e.s(["ApScore",()=>r,"ImageVote",()=>T])}]);

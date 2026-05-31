@@ -47,6 +47,13 @@ ul, ol {
     align-content: center;
 }
 
+.blog-text img,
+.blog-citations img {
+  width: 420px;      /* pick your size */
+  max-width: 100%;   /* responsive on mobile */
+  height: auto;      /* keep aspect ratio */
+}
+
 .blog-page-body {
     display: flex;
 }
