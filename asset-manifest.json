@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/youthstemciety/static/css/main.aa223388.css",
-    "main.js": "/youthstemciety/static/js/main.26cb002d.js",
+    "main.js": "/youthstemciety/static/js/main.4a34f296.js",
     "static/js/453.6ff9bb2b.chunk.js": "/youthstemciety/static/js/453.6ff9bb2b.chunk.js",
     "static/media/volunteer_1.png": "/youthstemciety/static/media/volunteer_1.ecfb9dba6dcf414217be.png",
     "static/media/volunteer_3.png": "/youthstemciety/static/media/volunteer_3.2671fbf279fa9b06a571.png",
@@ -32,11 +32,11 @@
     "static/media/expand-icon.svg": "/youthstemciety/static/media/expand-icon.33d575c14c886e6fec3b5044fc7c54c2.svg",
     "static/media/collapse-icon.svg": "/youthstemciety/static/media/collapse-icon.19e1de70050176edeee5ba6e058aba73.svg",
     "main.aa223388.css.map": "/youthstemciety/static/css/main.aa223388.css.map",
-    "main.26cb002d.js.map": "/youthstemciety/static/js/main.26cb002d.js.map",
+    "main.4a34f296.js.map": "/youthstemciety/static/js/main.4a34f296.js.map",
     "453.6ff9bb2b.chunk.js.map": "/youthstemciety/static/js/453.6ff9bb2b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.aa223388.css",
-    "static/js/main.26cb002d.js"
+    "static/js/main.4a34f296.js"
   ]
 }
