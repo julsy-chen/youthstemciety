@@ -1,5 +1,3 @@
-# Nanotechnology
-
 ## Overview
 
 Nanotechnology is a broad, interdisciplinary field of science and technology that studies, manipulates, and manufactures materials at the atomic and molecular level, ranging from 1 to 100 nanometers. To provide a sense of scale, a human fingernail grows about one nanometer every second, and large viruses measure 100 nanometers. The term "nanomaterials" is commonly used to describe nanoscale structures such as nanoparticles, nanotubes, shells, and quantum dots.

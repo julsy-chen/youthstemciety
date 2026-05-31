@@ -1,6 +1,11 @@
 {
     "Science": [
         {
+            "title": "Rabies",
+            "date": "01/03/2026",
+            "author": "Aasiyah Ahmed",
+            "filePath": "/blogs/science/rabies.md"
+        }, {
             "title": "How Vaccines Work",
             "date": "10/24/2025",
             "author": "Mustafa Siddiqui",
@@ -10,7 +15,7 @@
     "Technology": [
         {
             "title": "Nanotechnology",
-            "date": "01/03/2025",
+            "date": "01/03/2026",
             "author": "Kaitlyn Liau",
             "filePath": "/blogs/technology/nanotechnology.md"
         }
