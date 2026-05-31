@@ -1,6 +1,11 @@
 {
     "Science": [
-
+        {
+            "title": "How Vaccines Work",
+            "date": "10/24/2025",
+            "author": "Mustafa Siddiqui",
+            "filePath": "/blogs/science/how-vaccines-work.md"
+        }
     ],
     "Technology": [
         

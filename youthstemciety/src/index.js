@@ -4,11 +4,18 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom"
+const publicUrlPath = process.env.PUBLIC_URL
+  ? new URL(process.env.PUBLIC_URL, window.location.origin).pathname.replace(/\/$/, "")
+  : "";
+
+const basename = publicUrlPath && window.location.pathname.startsWith(publicUrlPath)
+  ? publicUrlPath
+  : "";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter basename={process.env.NODE_ENV === 'production' ? '/youthstemciety' : ''}>
+    <BrowserRouter basename={basename}>
       <App />
     </BrowserRouter>
   </React.StrictMode>
